@@ -1,0 +1,236 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Сергей – Сантехнические услуги</title>
+<link href="https://fonts.googleapis.com/css2?family=Roboto:wght@400;700&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css" crossorigin="anonymous" referrerpolicy="no-referrer" />
+<style>
+* { margin:0; padding:0; box-sizing:border-box; }
+body, html { font-family:'Roboto', sans-serif; background:#f5f7fa; color:#333; line-height:1.6; scroll-behavior:smooth; }
+a { text-decoration:none; color:inherit; }
+img { display:block; width:100%; }
+
+/* Навигация */
+nav {
+  position:fixed; top:0; width:100%;
+  background:rgba(255,255,255,0.95);
+  display:flex; justify-content:space-between; align-items:center;
+  padding:10px 20px;
+  box-shadow:0 2px 10px rgba(0,0,0,0.1);
+  z-index:1000;
+}
+nav .logo { font-weight:700; color:#4facfe; font-size:1.2rem; }
+nav .menu { display:flex; gap:20px; }
+nav .menu a { font-weight:500; color:#333; transition: color 0.3s; font-size:1rem; }
+nav .menu a:hover { color:#4facfe; }
+
+/* Бургер */
+nav .burger { display:none; flex-direction:column; cursor:pointer; }
+nav .burger span {
+  height:3px; width:25px; background:#333; margin:4px 0; border-radius:2px; transition:all 0.3s ease;
+}
+nav.active .burger span:nth-child(1) { transform:rotate(45deg) translate(5px,5px); }
+nav.active .burger span:nth-child(2) { opacity:0; }
+nav.active .burger span:nth-child(3) { transform:rotate(-45deg) translate(6px,-6px); }
+
+nav.active .menu {
+  position:absolute; top:60px; left:0; width:100%;
+  flex-direction:column; background:#fff;
+  text-align:center; padding:20px 0; box-shadow:0 5px 15px rgba(0,0,0,0.1);
+}
+nav.active .menu a { padding:10px 0; font-size:1.1rem; }
+
+/* Хедер */
+header { background: linear-gradient(135deg,#4facfe,#00f2fe); color:#fff; padding:100px 20px 60px; text-align:center; overflow:hidden; }
+header h1 { font-size:2.5rem; margin-bottom:20px; opacity:0; transform:translateY(-30px); transition: all 1s ease; }
+header p { font-size:1.1rem; margin-bottom:30px; opacity:0; transform:translateY(30px); transition: all 1s ease 0.3s; }
+header a { background:linear-gradient(45deg,#fff,#e0f7ff); color:#4facfe; padding:12px 30px; border-radius:50px; font-weight:bold; transition: all 0.4s ease; display:inline-block; }
+header a:hover { transform: translateY(-5px) scale(1.05); background:linear-gradient(45deg,#e0f7ff,#fff); }
+
+/* Секции */
+section { padding:60px 20px; max-width:1200px; margin:0 auto; }
+h2 { text-align:center; margin-bottom:40px; font-size:2rem; color:#4facfe; position:relative; opacity:0; transform:translateY(30px); transition: all 0.8s ease; }
+h2::after { content:''; display:block; width:60px; height:3px; background:#4facfe; margin:10px auto 0; border-radius:2px; }
+
+h4{ text-align:center; font-size:2rem; }
+
+/* Услуги */
+.services { display:grid; grid-template-columns:repeat(auto-fit,minmax(250px,1fr)); gap:30px; }
+.service {
+    background:#fff; padding:30px; border-radius:15px;
+    box-shadow:0 10px 25px rgba(0,0,0,0.1); transition: transform 0.3s, box-shadow 0.3s, opacity 0.8s ease, transform 0.8s ease;
+    opacity:0; transform:translateY(30px); text-align:center;
+}
+.service.visible { opacity:1; transform:translateY(0); }
+.service:hover { transform:translateY(-10px) scale(1.03); box-shadow:0 20px 40px rgba(0,0,0,0.2); }
+.service i { font-size:3rem; color:#4facfe; margin-bottom:20px; transition: transform 0.3s, color 0.3s; cursor:pointer; }
+.service i:hover { transform:rotate(20deg) scale(1.2); color:#00f2fe; }
+.service h3 { margin-bottom:15px; color:#333; transition: transform 0.3s ease, color 0.3s ease; font-size:1.2rem; }
+.service h3:hover { transform: translateY(-5px) scale(1.05); color:#00f2fe; }
+.service p { color:#666; transition: transform 0.3s ease; font-size:0.95rem; }
+.service p:hover { transform: translateY(-2px); }
+
+/* Портфолио */
+.portfolio { display:grid; grid-template-columns:repeat(auto-fit,minmax(200px,1fr)); gap:20px; }
+.portfolio-item { position:relative; overflow:hidden; border-radius:15px; cursor:pointer; }
+.portfolio-item img { width:100%; transition: transform 0.4s; opacity:0; transform:translateY(30px); border-radius:15px; }
+.portfolio-item.visible img { opacity:1; transform:translateY(0); }
+.portfolio-item:hover img { transform:scale(1.08); }
+
+/* Подписи */
+.portfolio-item .caption {
+    position:absolute; bottom:0; left:0; right:0; background:rgba(0,0,0,0.6);
+    color:#fff; padding:15px; text-align:center; transform:translateY(100%);
+    transition: transform 0.4s ease;
+}
+.portfolio-item:hover .caption { transform:translateY(0); }
+
+/* Контакты */
+.contact {
+  text-align:center; background:#4facfe; color:#fff; border-radius:15px;
+  padding:40px 20px; transition: transform 0.3s, box-shadow 0.3s;
+}
+.contact:hover { transform:translateY(-5px) scale(1.02); box-shadow:0 20px 40px rgba(0,0,0,0.2); }
+.contact h2 { color:#fff; }
+.contact a {
+  color:#fff; font-weight:bold; display:inline-block; margin-top:20px;
+  background:rgba(255,255,255,0.2); padding:12px 25px; border-radius:50px;
+  transition: all 0.3s ease; font-size:1rem;
+}
+.contact a:hover { background:rgba(255,255,255,0.4); transform: translateY(-3px) scale(1.05); }
+
+body { padding-top:60px; }
+
+/* Адаптивные стили */
+@media (max-width:768px){
+  nav .menu { display:none; }
+  nav .burger { display:flex; }
+  header { padding:90px 15px 50px; }
+  header h1 { font-size:1.9rem; }
+  header p { font-size:0.95rem; }
+  header a { padding:10px 25px; font-size:0.9rem; }
+  .service { padding:20px; }
+  .service h3 { font-size:1rem; }
+  .service p { font-size:0.9rem; }
+  .portfolio { gap:15px; }
+}
+@media (max-width:480px){
+  header h1 { font-size:1.6rem; }
+  h2 { font-size:1.6rem; }
+}
+</style>
+</head>
+<body>
+
+<nav>
+  <div class="logo">Сантехник Сергей</div>
+  <div class="menu">
+    <a href="#services">Услуги</a>
+    <a href="#portfolio">Примеры работ</a>
+    <a href="#contact">Контакты</a>
+  </div>
+  <div class="burger">
+    <span></span>
+    <span></span>
+    <span></span>
+  </div>
+</nav>
+
+<header>
+  <h1>Сергей – Сантехнические услуги</h1>
+  <p>Монтаж и ремонт систем отопления, водоснабжения, канализации и фильтрации воды <br> 100% гарантия, своих клиентов не бросаем</p>
+  <a href="#contact">Связаться с нами</a>
+</header>
+
+<section id="services">
+  <h2>Наши услуги</h2>
+  <div class="services">
+    <div class="service">
+      <i class="fas fa-fire"></i>
+      <h3>Монтаж систем отопления</h3>
+      <p>Проектирование и установка систем отопления любой сложности.</p>
+    </div>
+    <div class="service">
+      <i class="fas fa-tint"></i>
+      <h3>Монтаж систем водоснабжения</h3>
+      <p>Установка трубопроводов и оборудования для бесперебойной подачи воды.</p>
+    </div>
+    <div class="service">
+      <i class="fas fa-toilet"></i>
+      <h3>Системы водоотведения и канализации</h3>
+      <p>Монтаж и обслуживание канализационных систем.</p>
+    </div>
+    <div class="service">
+      <i class="fas fa-cogs"></i>
+      <h3>Ремонт и обслуживание котлов</h3>
+      <p>Профессиональный ремонт и сервисное обслуживание котлов.</p>
+    </div>
+  </div>
+</section>
+
+<section id="portfolio">
+  <h2>Примеры работ</h2>
+  <div class="portfolio">
+    <div class="portfolio-item">
+      <img src="https://mirkotlov.by/image/catalog/111-montaj-111/pyhovichi/montaj-kotelnoy-puhovichi-foto-1.jpg" alt="Монтаж отопления" loading="lazy">
+      <div class="caption">Монтаж отопления</div>
+    </div>
+    <div class="portfolio-item">
+      <img src="https://1000dosok.ru/s/26-02-3643046_1.jpg" alt="Водоснабжение" loading="lazy">
+      <div class="caption">Водоснабжение</div>
+    </div>
+    <div class="portfolio-item">
+      <img src="https://impresarossetto.it/images/Lavorazioni/Fognature/01_Foto.jpg" alt="Канализация" loading="lazy">
+      <div class="caption">Канализация</div>
+    </div>
+    <div class="portfolio-item">
+      <img src="https://static.tildacdn.net/tild3261-3964-4461-b866-613465346633/R_3ADMWFw9M.jpg" alt="Тёплый пол" loading="lazy">
+      <div class="caption">Тёплый пол</div>
+    </div>
+  </div>
+</section>
+
+<section id="contact">
+  <div class="contact">
+    <h4>Контакты</h4>
+    <div style="width:60px; height:3px; background:#fff; margin:10px auto 20px; border-radius:2px;"></div>
+    <p>Для заказа услуг звоните или пишите:</p>
+    <a href="tel:+79529642512">+7 952 964-25-12</a><br>
+    <a href="mailto:sonor32@mail.ru">sonor32@mail.ru</a>
+  </div>
+</section>
+
+<script>
+// Анимация появления
+function onScrollAnimate() {
+  const services = document.querySelectorAll('.service');
+  const portfolio = document.querySelectorAll('.portfolio-item');
+  const h2s = document.querySelectorAll('h2');
+  const scrollPos = window.innerHeight;
+
+  services.forEach(el => { if(el.getBoundingClientRect().top < scrollPos-50) el.classList.add('visible'); });
+  portfolio.forEach(el => { if(el.getBoundingClientRect().top < scrollPos-50) el.classList.add('visible'); });
+  h2s.forEach(el => { if(el.getBoundingClientRect().top < scrollPos-50) { el.style.opacity=1; el.style.transform='translateY(0)'; } });
+}
+
+window.addEventListener('scroll', onScrollAnimate);
+window.addEventListener('load', () => {
+  document.querySelector('header h1').style.opacity=1;
+  document.querySelector('header h1').style.transform='translateY(0)';
+  document.querySelector('header p').style.opacity=1;
+  document.querySelector('header p').style.transform='translateY(0)';
+  onScrollAnimate();
+});
+
+// Бургер меню
+const burger = document.querySelector('.burger');
+const nav = document.querySelector('nav');
+burger.addEventListener('click', () => {
+  nav.classList.toggle('active');
+});
+</script>
+
+</body>
+</html>
