@@ -4,9 +4,19 @@
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>Сантехнические услуги Сергей</title>
+
+<!-- Favicon -->
+<link rel="icon" type="image/png" href="favicon.png">
 <link rel="icon" type="image/svg+xml" href="favicon.svg">
+
+<!-- Шрифты и иконки -->
 <link href="https://fonts.googleapis.com/css2?family=Roboto:wght@400;700&display=swap" rel="stylesheet">
 <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css" crossorigin="anonymous" referrerpolicy="no-referrer" />
+
+<!-- SEO -->
+<meta name="description" content="Профессиональные сантехнические услуги в Брянске. Монтаж и ремонт отопления, водоснабжения, канализации. Сергей — надёжный мастер с опытом.">
+<meta name="keywords" content="сантехник Брянск, услуги сантехника, монтаж отопления, водоснабжение, канализация, ремонт">
+
 <style>
 *{margin:0;padding:0;box-sizing:border-box;}
 body,html{font-family:'Roboto',sans-serif;background:#f5f7fa;color:#333;line-height:1.6;scroll-behavior:smooth;}
@@ -182,43 +192,50 @@ h4 { text-align:center; font-size:2rem; }
 .portfolio-item:hover .caption { transform:translateY(0); }
 
 /* ==== СЛАЙДЕР ==== */
-#gallery { text-align:center; padding:60px 20px; }
-.slider {
-  position:relative;
-  max-width:800px;
-  margin:0 auto;
-  overflow:hidden;
-  border-radius:15px;
-  box-shadow:0 10px 25px rgba(0,0,0,0.1);
+.small-slider {
+  position: relative;
+  max-width: 700px;
+  margin: 0 auto;
+  overflow: hidden;
+  border-radius: 15px;
+  box-shadow: 0 8px 20px rgba(0,0,0,0.1);
+  height: 320px;
 }
 .slides {
-  display:flex;
-  transition: transform 0.5s ease;
+  display: flex;
+  transition: transform 0.6s ease;
+  width: 100%;
 }
 .slides img {
-  width:100%;
-  flex-shrink:0;
+  width: 100%;
+  height: 320px;
+  object-fit: cover;
+  flex-shrink: 0;
 }
-.prev, .next {
-  position:absolute;
-  top:50%;
-  transform:translateY(-50%);
-  background:rgba(0,0,0,0.5);
-  color:#fff;
-  border:none;
-  padding:10px 15px;
-  border-radius:50%;
-  cursor:pointer;
-  transition:background 0.3s;
+.small-slider .prev,
+.small-slider .next {
+  position: absolute;
+  top: 50%;
+  transform: translateY(-50%);
+  background: rgba(0,0,0,0.4);
+  color: #fff;
+  border: none;
+  padding: 8px 12px;
+  border-radius: 50%;
+  cursor: pointer;
+  transition: background 0.3s;
+  z-index: 10;
 }
-.prev:hover, .next:hover {
-  background:rgba(0,0,0,0.7);
+.small-slider .prev:hover,
+.small-slider .next:hover {
+  background: rgba(0,0,0,0.7);
 }
-.prev { left:15px; }
-.next { right:15px; }
-@media (max-width:768px) {
-  .slider { max-width:95%; }
-  .prev, .next { padding:8px 12px; }
+.small-slider .prev { left: 10px; }
+.small-slider .next { right: 10px; }
+
+@media (max-width: 768px) {
+  .small-slider { height: 220px; }
+  .slides img { height: 220px; }
 }
 
 /* ==== КОНТАКТЫ ==== */
@@ -263,6 +280,7 @@ body { padding-top:60px; }
     <div class="nav-links" id="nav-links">
       <a href="#services">Услуги</a>
       <a href="#portfolio">Наши работы</a>
+      <a href="#gallery">Галерея</a>
       <a href="#contact">Контакты</a>
     </div>
   </div>
@@ -299,14 +317,9 @@ body { padding-top:60px; }
 <!-- ==== СЛАЙДЕР ==== -->
 <section id="gallery">
   <h2>Больше фотографий наших работ</h2>
-  <div class="slider">
+  <div class="slider small-slider">
     <button class="prev"><i class="fas fa-chevron-left"></i></button>
-    <div class="slides">
-      <img src="" alt="Фото 1">
-      <img src="" alt="Фото 2">
-      <img src="" alt="Фото 3">
-      <img src="" alt="Фото 4">
-    </div>
+    <div class="slides" id="slides"></div>
     <button class="next"><i class="fas fa-chevron-right"></i></button>
   </div>
 </section>
@@ -330,6 +343,9 @@ const navbar=document.getElementById('navbar');
 const logo=document.getElementById('logo');
 
 burger.addEventListener('click',()=>navLinks.classList.toggle('active'));
+navLinks.querySelectorAll('a').forEach(link=>{
+  link.addEventListener('click',()=>navLinks.classList.remove('active'));
+});
 window.addEventListener('scroll',()=>{navbar.classList.toggle('scrolled',window.scrollY>50);});
 
 function onScrollAnimate(){
@@ -352,18 +368,40 @@ window.addEventListener('load',()=>{
 });
 
 // ==== СЛАЙДЕР ====
-const slides=document.querySelector('.slides');
-const slideImages=document.querySelectorAll('.slides img');
-const prev=document.querySelector('.prev');
-const next=document.querySelector('.next');
-let index=0;
+// Файлы из папки images
+const imageCount = 10; // количество файлов (1.jpg ... 10.jpg)
+const slidesContainer = document.getElementById('slides');
+for (let i = 1; i <= imageCount; i++) {
+  const img = document.createElement('img');
+  img.src = `images/${i}.webp`;
+  slidesContainer.appendChild(img);
+}
+
+const slides = document.querySelector('.slides');
+const slideImages = document.querySelectorAll('.slides img');
+const prev = document.querySelector('.prev');
+const next = document.querySelector('.next');
+let index = 0;
+
 function showSlide(n){
   index=(n+slideImages.length)%slideImages.length;
   slides.style.transform=`translateX(${-index*100}%)`;
 }
 prev.addEventListener('click',()=>showSlide(index-1));
 next.addEventListener('click',()=>showSlide(index+1));
-setInterval(()=>showSlide(index+1),5000);
+</script>
+
+<!-- ==== МИКРОРАЗМЕТКА ==== -->
+<script type="application/ld+json">
+{
+  "@context": "https://schema.org",
+  "@type": "Plumber",
+  "name": "Сергей — сантехнические услуги",
+  "telephone": "+7 952 964-25-12",
+  "email": "sonor32@mail.ru",
+  "areaServed": "Брянск, Брянская область",
+  "description": "Монтаж и ремонт отопления, водоснабжения и канализации."
+}
 </script>
 
 </body>
