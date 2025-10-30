@@ -346,7 +346,6 @@ burger.addEventListener('click',()=>navLinks.classList.toggle('active'));
 navLinks.querySelectorAll('a').forEach(link=>{
   link.addEventListener('click',()=>navLinks.classList.remove('active'));
 });
-window.addEventListener('scroll',()=>{navbar.classList.toggle('scrolled',window.scrollY>50);});
 
 function onScrollAnimate(){
   const services=document.querySelectorAll('.service');
