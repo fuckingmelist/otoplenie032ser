@@ -82,7 +82,7 @@ nav.scrolled .burger { color: #fff; }
     position: absolute;
     top: 60px;
     right: 15px;
-    background: rgba(255,255,255,0.97);
+    background: linear-gradient(90deg, #4facfe, #00f2fe);
     flex-direction: column;
     width: 200px;
     text-align: right;
@@ -307,10 +307,10 @@ body { padding-top:60px; }
 <section id="portfolio">
   <h2>Наши работы</h2>
   <div class="portfolio">
-    <div class="portfolio-item"><img src="https://mirkotlov.by/image/catalog/111-montaj-111/pyhovichi/montaj-kotelnoy-puhovichi-foto-1.jpg" alt="Работа 1"><div class="caption">Монтаж отопления</div></div>
-    <div class="portfolio-item"><img src="https://1000dosok.ru/s/26-02-3643046_1.jpg" alt="Работа 2"><div class="caption">Водоснабжение</div></div>
-    <div class="portfolio-item"><img src="https://impresarossetto.it/images/Lavorazioni/Fognature/01_Foto.jpg" alt="Работа 3"><div class="caption">Канализация</div></div>
-    <div class="portfolio-item"><img src="https://static.tildacdn.net/tild3261-3964-4461-b866-613465346633/R_3ADMWFw9M.jpg" alt="Работа 4"><div class="caption">Тёплый пол</div></div>
+    <div class="portfolio-item"><img src="https://i.postimg.cc/y89DpPW0/image.png" alt="Работа 1"><div class="caption">Монтаж отопления</div></div>
+    <div class="portfolio-item"><img src="https://i.postimg.cc/50G1Mhkk/image.png" alt="Работа 2"><div class="caption">Водоснабжение</div></div>
+    <div class="portfolio-item"><img src="https://i.postimg.cc/3NfPGVG2/image.png" alt="Работа 3"><div class="caption">Канализация</div></div>
+    <div class="portfolio-item"><img src="https://i.postimg.cc/vmZc8d3y/image.png" alt="Работа 4"><div class="caption">Тёплый пол</div></div>
   </div>
 </section>
 
@@ -369,11 +369,11 @@ window.addEventListener('load',()=>{
 
 // ==== СЛАЙДЕР ====
 // Файлы из папки images
-const imageCount = 10; // количество файлов (1.jpg ... 10.jpg)
+const imageCount = 67; // количество файлов (1.jpg ... 10.jpg)
 const slidesContainer = document.getElementById('slides');
 for (let i = 1; i <= imageCount; i++) {
   const img = document.createElement('img');
-  img.src = `images/${i}.webp`;
+  img.src = `images/photo_${i}_2025-10-29_23-27-37.jpg`;
   slidesContainer.appendChild(img);
 }
 
